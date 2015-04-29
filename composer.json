@@ -1,0 +1,39 @@
+{
+  "name" : "coolms/acl",
+  "description" : "CoolMS2 ACL Module",
+  "version" : "0.1.0",
+  "type" : "library",
+  "keywords" : [ "zf2", "coolms", "coolms2", "acl" ],
+  "homepage" : "https://github.com/coolms/acl",
+  "license" : "BSD-3-Clause",
+  "authors" : [ {
+    "name" : "Dmitry Popov",
+    "email" : "d.popov@altgraphic.com",
+    "role" : "Developer"
+  } ],
+  "require" : {
+    "php" : ">=5.4.0",
+    "coolms/permissions" : "dev-master@dev"
+  },
+  "require-dev" : {
+    "phpunit/phpunit" : "~4.5"
+  },
+  "suggest": {
+    "coolms/rbac" : "coolms/rbac for using RBAC"
+  },
+  "autoload" : {
+    "psr-4" : { "CmsAcl\\" : "src/" }
+  },
+  "autoload-dev" : {
+    "psr-4" : { "CmsAclTest\\" : "tests/" }
+  },
+  "extra" : {
+    "branch-alias" : {
+      "dev-master" : "0.1.x-dev"
+    }
+  },
+  "repositories" : [ {
+    "type" : "vcs",
+    "url" : "https://www.github.com/coolms/permissions"
+  } ]
+}
