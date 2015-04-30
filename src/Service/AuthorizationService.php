@@ -163,7 +163,7 @@ class AuthorizationService implements AuthorizationServiceInterface, AclProvider
     /**
      * @param RoleInterface[] $roles
      */
-    private function loadRoles(array $roles)
+    private function loadRoles($roles)
     {
         /* @var $role RoleInterface */
         foreach ($roles as $role) {
@@ -185,8 +185,8 @@ class AuthorizationService implements AuthorizationServiceInterface, AclProvider
 
         if (is_string($role)) {
             $role = new GenericRole($role);
-        } elseif ($role instanceof RoleProvider && ($roles = $role->getRoles())) {
-            $this->loadRoles($roles);
+        } elseif ($role instanceof RoleProvider && ($parent = $role->getRoles())) {
+            $this->loadRoles($parent);
         } elseif ($role instanceof HierarchicalRoleInterface && ($parent = $role->getParent())) {
             is_array($parent) ? $this->loadRoles($parent) : $this->loadRole($parent);
         } elseif (!$role instanceof RoleInterface) {

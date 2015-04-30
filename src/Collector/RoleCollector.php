@@ -14,7 +14,8 @@ use Zend\Mvc\MvcEvent,
     Zend\Permissions\Acl\Role\RoleInterface,
     ZendDeveloperTools\Collector\CollectorInterface,
     CmsAcl\Role\HierarchicalRoleInterface,
-    CmsPermissions\Identity\ProviderInterface;
+    CmsPermissions\Identity\ProviderInterface as IdentityProvider,
+    CmsPermissions\Role\ProviderInterface as RoleProvider;
 
 /**
  * Role collector - collects the role during dispatch
@@ -40,14 +41,14 @@ class RoleCollector implements \Serializable, CollectorInterface
     protected $collectedRoles = [];
 
     /**
-     * @var ProviderInterface
+     * @var IdentityProvider
      */
     protected $identityProvider;
 
     /**
-     * @param ProviderInterface $identityProvider
+     * @param IdentityProvider $identityProvider
      */
-    public function __construct(ProviderInterface $identityProvider)
+    public function __construct(IdentityProvider $identityProvider)
     {
         $this->identityProvider = $identityProvider;
     }
@@ -81,9 +82,13 @@ class RoleCollector implements \Serializable, CollectorInterface
         $role  = $this->identityProvider->getIdentity();
         $roles = [$role];
 
-        if ($role instanceof HierarchicalRoleInterface && $role->getParent()) {
-            foreach ($role->getParent() as $parent) {
-                $roles[] = $parent;
+        if ($role instanceof HierarchicalRoleInterface && ($parent = $role->getParent())) {
+            foreach ($parent as $parentRole) {
+                $roles[] = $parentRole;
+            }
+        } elseif ($role instanceof RoleProvider && ($parent = $role->getRoles())) {
+            foreach ($parent as $parentRole) {
+                $roles[] = $parentRole;
             }
         }
 
