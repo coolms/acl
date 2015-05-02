@@ -8,11 +8,11 @@
  * @author    Dmitry Popov <d.popov@altgraphic.com>
  */
 
-namespace CmsAcl\Factory\Controller\Plugin;
+namespace CmsAcl\Factory\Mvc\Controller\Plugin;
 
 use Zend\ServiceManager\FactoryInterface,
     Zend\ServiceManager\ServiceLocatorInterface,
-    CmsAcl\Controller\Plugin\IsAllowed;
+    CmsAcl\Mvc\Controller\Plugin\IsAllowed;
 
 class IsAllowedPluginFactory implements FactoryInterface
 {

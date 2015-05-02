@@ -15,7 +15,7 @@ use CmsPermissions\Exception\InvalidArgumentException;
 /**
  * Invalid resource exception for CmsAcl
  */
-class InvalidResourceException extends InvalidArgumentException
+class InvalidResourceException extends InvalidArgumentException implements ExceptionInterface
 {
     /**
      * @param mixed $resource

@@ -8,7 +8,7 @@
  * @author    Dmitry Popov <d.popov@altgraphic.com>
  */
 
-namespace CmsAcl\Controller;
+namespace CmsAcl\Mvc\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 

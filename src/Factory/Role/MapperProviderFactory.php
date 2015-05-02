@@ -33,6 +33,6 @@ class MapperProviderFactory implements FactoryInterface
         /* @var $options \CmsPermissions\Options\ModuleOptionsInterface */
         $options = $services->get('CmsPermissions\\Options\\ModuleOptions');
 
-        return new MapperProvider($services->get('MapperManager')->get($options->getRoleClass()));
+        return new MapperProvider($services->get('MapperManager')->get($options->getRoleEntityClass()));
     }
 }

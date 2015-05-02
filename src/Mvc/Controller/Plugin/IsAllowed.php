@@ -8,7 +8,7 @@
  * @author    Dmitry Popov <d.popov@altgraphic.com>
  */
 
-namespace CmsAcl\Controller\Plugin;
+namespace CmsAcl\Mvc\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin,
     CmsAcl\Service\AuthorizationServiceAwareTrait,

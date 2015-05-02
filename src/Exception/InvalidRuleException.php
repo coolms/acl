@@ -13,9 +13,9 @@ namespace CmsAcl\Exception;
 use CmsPermissions\Exception\InvalidRoleException as BaseInvalidRoleException;
 
 /**
- * Invalid role exception for CmsAcl
+ * Invalid rule exception for CmsAcl
  */
-class InvalidRoleException extends BaseInvalidRoleException implements ExceptionInterface
+class InvalidRuleException extends BaseInvalidRoleException implements ExceptionInterface
 {
     
 }

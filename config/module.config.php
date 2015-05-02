@@ -62,17 +62,17 @@ return [
     ],
     'controller_plugins' => [
         'aliases' => [
-            'cmsIsAllowed' => 'CmsAcl\Controller\Plugin\IsAllowed'
+            'cmsIsAllowed' => 'CmsAcl\Mvc\Controller\Plugin\IsAllowed'
         ],
         'factories' => [
-            'CmsAcl\Controller\Plugin\IsAllowed'
-                => 'CmsAcl\Factory\Controller\Plugin\IsAllowedPluginFactory',
+            'CmsAcl\Mvc\Controller\Plugin\IsAllowed'
+                => 'CmsAcl\Factory\Mvc\Controller\Plugin\IsAllowedPluginFactory',
         ],
     ],
     'controllers' => [
         'invokables' => [
-            'CmsAcl\Controller\Privilege' => 'CmsAcl\Controller\PrivilegeController',
-            'CmsAcl\Controller\Resource' => 'CmsAcl\Controller\ResourceController',
+            'CmsAcl\Controller\Privilege' => 'CmsAcl\Mvc\Controller\PrivilegeController',
+            'CmsAcl\Controller\Resource' => 'CmsAcl\Mvc\Controller\ResourceController',
         ],
     ],
     'service_manager' => [

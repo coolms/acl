@@ -3,19 +3,17 @@
  * CoolMS2 ACL Module (http://www.coolms.com/)
  *
  * @link        http://github.com/coolms/acl for the canonical source repository
- * @copyright   Copyright (c) 2006-2015 Altgraphic, ALC (http://www.altgraphic.com)
  * @license     http://www.coolms.com/license/new-bsd New BSD License
+ * @author      Ben Youngblood <bx.youngblood@gmail.com>
  * @author      Dmitry Popov <d.popov@altgraphic.com>
  */
 
 namespace CmsAcl\Exception;
 
-use CmsPermissions\Exception\InvalidRoleException as BaseInvalidRoleException;
-
 /**
- * Invalid role exception for CmsAcl
+ * Base exception interface for CmsAcl
  */
-class InvalidRoleException extends BaseInvalidRoleException implements ExceptionInterface
+interface ExceptionInterface
 {
     
 }

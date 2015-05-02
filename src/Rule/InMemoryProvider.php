@@ -11,7 +11,7 @@
 namespace CmsAcl\Rule;
 
 use Zend\Permissions\Acl\Assertion\AssertionManager,
-    CmsPermissions\Exception\InvalidArgumentException;
+    CmsAcl\Exception\InvalidRuleException;
 
 /**
  * Rule provider based on a given array of rules
@@ -58,7 +58,7 @@ class InMemoryProvider implements ProviderInterface
 
     /**
      * @param array $rule
-     * @throws InvalidArgumentException
+     * @throws InvalidRuleException
      * @return Rule
      */
     protected function loadRule(array $rule)
@@ -78,7 +78,7 @@ class InMemoryProvider implements ProviderInterface
                 list($roles, $resources) = $rule;
                 return new Rule($roles, $resources);
         	default:
-                throw new InvalidArgumentException('Invalid rule definition: ' . print_r($rule, true));
+                throw new InvalidRuleException('Invalid rule definition: ' . print_r($rule, true));
         }
     }
 }
