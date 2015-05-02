@@ -49,7 +49,7 @@ class InMemoryProvider implements ProviderInterface
 
         foreach ($this->config as $type => $typedRules) {
             foreach ($typedRules as $rule) {
-            	$rules[] = $this->loadRule($rule)->setType($type);
+                $rules[] = $this->loadRule($rule)->setType($type);
             }
         }
 
@@ -64,20 +64,20 @@ class InMemoryProvider implements ProviderInterface
     protected function loadRule(array $rule)
     {
         switch (count($rule)) {
-        	case 4:
+            case 4:
                 list($roles, $resources, $privileges, $assertion) = $rule;
                 if (is_string($assertion)) {
                     $assertion = $this->assertionPluginManager->get($assertion);
                 }
 
                 return new Rule($roles, $resources, $privileges, $assertion);
-        	case 3:
+            case 3:
                 list($roles, $resources, $privileges) = $rule;
                 return new Rule($roles, $resources, $privileges);
-        	case 2:
+            case 2:
                 list($roles, $resources) = $rule;
                 return new Rule($roles, $resources);
-        	default:
+            default:
                 throw new InvalidRuleException('Invalid rule definition: ' . print_r($rule, true));
         }
     }
