@@ -11,6 +11,7 @@
 namespace CmsAcl;
 
 use Zend\EventManager\EventInterface,
+    Zend\Http\Request as HttpRequest,
     Zend\ModuleManager\Feature\AutoloaderProviderInterface,
     Zend\ModuleManager\Feature\BootstrapListenerInterface,
     Zend\ModuleManager\Feature\ConfigProviderInterface,
@@ -60,6 +61,10 @@ class Module implements
      */
     public function onBootstrap(EventInterface $event)
     {
+        if (!$event->getRequest() instanceof HttpRequest) {
+            return;
+        }
+
         /* @var $app \Zend\Mvc\ApplicationInterface */
         $app = $event->getTarget();
         /* @var $services \Zend\ServiceManager\ServiceLocatorInterface */
