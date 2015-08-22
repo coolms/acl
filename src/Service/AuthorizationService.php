@@ -17,13 +17,13 @@ use Zend\Permissions\Acl\AclInterface,
     Zend\Permissions\Acl\Role\RoleInterface,
     Zend\ServiceManager\ServiceLocatorAwareTrait,
     Zend\ServiceManager\ServiceLocatorInterface,
+    CmsCommon\Permissions\Acl\AclProviderInterface,
+    CmsPermissions\Role\ProviderInterface as RoleProvider,
     CmsAcl\Exception\InvalidRoleException,
     CmsAcl\Resource\HierarchicalResourceInterface,
     CmsAcl\Resource\ProviderInterface as ResourceProvider,
     CmsAcl\Role\HierarchicalRoleInterface,
-    CmsAcl\Rule\ProviderInterface as RuleProvider,
-    CmsAcl\Stdlib\AclProviderInterface,
-    CmsPermissions\Role\ProviderInterface as RoleProvider;
+    CmsAcl\Rule\ProviderInterface as RuleProvider;
 
 /**
  * Authorization service
@@ -48,7 +48,7 @@ class AuthorizationService implements AuthorizationServiceInterface, AclProvider
     /**
      * @var \Closure|null
      */
-    protected $loaded;
+    private $loaded;
 
     /**
      * __construct

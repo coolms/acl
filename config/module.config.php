@@ -110,8 +110,10 @@ return [
             'cmsIsAllowed' => 'CmsAcl\View\Helper\IsAllowed',
         ],
         'factories' => [
-            'CmsAcl\View\Helper\IsAllowed'
-                => 'CmsAcl\Factory\View\Helper\IsAllowedHelperFactory',
+            'CmsAcl\View\Helper\IsAllowed' => 'CmsAcl\Factory\View\Helper\IsAllowedHelperFactory',
+        ],
+        'initializers' => [
+            'CmsAcl\Initializer\AclInitializer' => 'CmsAcl\Initializer\AclInitializer',
         ],
     ],
     'view_manager' => [
