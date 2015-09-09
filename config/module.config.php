@@ -79,8 +79,7 @@ return [
         'aliases' => [
             'Zend\Permissions\Acl\AclInterface' => 'Zend\Permissions\Acl\Acl',
             'CmsAcl\Options\ModuleOptionsInterface' => 'CmsAcl\Options\ModuleOptions',
-            'CmsAcl\Service\AuthorizationServiceInterface'
-                => 'CmsAcl\Service\AuthorizationService',
+            'CmsAcl\Service\AuthorizationServiceInterface' => 'CmsAcl\Service\AuthorizationService',
         ],
         'factories' => [
             'Zend\Permissions\Acl\Acl' => 'CmsAcl\Factory\AclFactory',

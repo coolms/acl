@@ -138,16 +138,6 @@ class AuthorizationService implements AuthorizationServiceInterface, AclProvider
             $this->loadRoles($provider->getRoles());
         }
 
-        /* @var $provider ResourceProvider */
-        foreach ($this->getServiceLocator()->get('CmsAcl\\Resources') as $provider) {
-            $this->loadResources($provider->getResources());
-        }
-
-        /* @var $provider RuleProvider */
-        foreach ($this->getServiceLocator()->get('CmsAcl\\Rules') as $provider) {
-            $this->loadRules($provider->getRules());
-        }
-
         /* @var $guard \CmsAcl\Guard\GuardInterface */
         foreach ($this->getServiceLocator()->get('CmsAcl\\Guards') as $guard) {
             if ($guard instanceof ResourceProvider) {
@@ -157,6 +147,16 @@ class AuthorizationService implements AuthorizationServiceInterface, AclProvider
             if ($guard instanceof RuleProvider) {
                 $this->loadRules($guard->getRules());
             }
+        }
+
+        /* @var $provider ResourceProvider */
+        foreach ($this->getServiceLocator()->get('CmsAcl\\Resources') as $provider) {
+            $this->loadResources($provider->getResources());
+        }
+
+        /* @var $provider RuleProvider */
+        foreach ($this->getServiceLocator()->get('CmsAcl\\Rules') as $provider) {
+            $this->loadRules($provider->getRules());
         }
     }
 
