@@ -35,8 +35,11 @@ class Route extends AbstractGuard
         $service    = $this->getAuthorizationService();
         $match      = $event->getRouteMatch();
         $routeName  = $match->getMatchedRouteName();
+        $action     = $match->getParam('action');
 
-        if ($service->isAllowed('route/' . $routeName)) {
+        if ($service->isAllowed('route/' . $routeName) ||
+            $service->isAllowed('route/' . $routeName, $action)
+        ) {
             return true;
         }
 

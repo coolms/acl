@@ -58,6 +58,9 @@ return [
             'guards' => [
                 
             ],
+            'assertion_manager' => [
+                
+            ],
         ],
     ],
     'controller_plugins' => [

@@ -10,7 +10,9 @@
 
 namespace CmsAcl\Guard;
 
-use Zend\Permissions\Acl\Assertion\AssertionManager,
+use Zend\Permissions\Acl\Assertion\AssertionAggregate,
+    Zend\Permissions\Acl\Assertion\AssertionInterface,
+    Zend\Permissions\Acl\Assertion\AssertionManager,
     CmsAcl\Resource\ProviderInterface as ResourceProviderInterface,
     CmsAcl\Rule\ProviderInterface as RuleProviderInterface,
     CmsAcl\Rule\Rule,
@@ -55,7 +57,7 @@ abstract class AbstractGuard extends AbstractPermissionsGuard implements
      *
      * @param array|\Traversable $configRules
      * @param AuthorizationServiceInterface $authorizationService
-     * @param AssertionManager
+     * @param AssertionManager $assertionManager
      */
     public function __construct(
         $configRules,
@@ -99,17 +101,63 @@ abstract class AbstractGuard extends AbstractPermissionsGuard implements
     {
         if (null === $this->rules) {
             $this->rules = [];
-            foreach ($this->config as $resource => $ruleData) {
-                $assertion = null;
-                if (isset($ruleData['assertion'])) {
-                    $assertion = $this->assertionPluginManager->get($ruleData['assertion']);
+            foreach ($this->config as $resource => $rules) {
+                foreach ($rules as $ruleData) {
+                    $this->rules[] = new Rule(
+                        $ruleData['roles'],
+                        [$resource],
+                        $ruleData['privileges'],
+                        $this->normalizeAssertion($ruleData['assertion']),
+                        Rule::TYPE_ALLOW
+                    );
                 }
-
-                $this->rules[] = new Rule($ruleData['roles'], [$resource], null, $assertion, Rule::TYPE_ALLOW);
             }
         }
 
         return $this->rules;
+    }
+
+    /**
+     * @param string|array|AssertionInterface $assertion
+     * @return null|AssertionInterface
+     */
+    protected function normalizeAssertion($assertion)
+    {
+        if (!$assertion) {
+            return;
+        }
+
+        if ($assertion instanceof AssertionInterface) {
+            return $assertion;
+        }
+
+        $assertion = (array) $assertion;
+
+        if (count($assertion) > 1) {
+            $assertionAggregate = new AssertionAggregate();
+            foreach ($ruleData['assertion'] as $plugin) {
+                if (is_string($plugin) && $this->assertionPluginManager->has($plugin)) {
+                    $plugin = $this->assertionPluginManager->get($plugin);
+                }
+        
+                if ($plugin instanceof AssertionInterface) {
+                    $assertionAggregate->addAssertion($plugin);
+                }
+            }
+
+            return $assertionAggregate;
+        }
+
+        $assertion = reset($assertion);
+        if (!$assertion instanceof AssertionInterface) {
+            if (is_string($assertion) && $this->assertionPluginManager->has($assertion)) {
+                $assertion = $this->assertionPluginManager->get($assertion);
+            } else {
+                $assertion = null;
+            }
+        }
+
+        return $assertion;
     }
 
     /**
@@ -119,13 +167,11 @@ abstract class AbstractGuard extends AbstractPermissionsGuard implements
     public function setConfig($config)
     {
         foreach ($config as $rule) {
-            $rule['roles']  = (array) $rule['roles'];
-            $rule['action'] = isset($rule['action']) ? (array) $rule['action'] : [null];
+            $roles      = isset($rule['roles'])     ? (array) $rule['roles']     : null;
+            $privileges = isset($rule['action'])    ? (array) $rule['action']    : null;
+            $assertion  = isset($rule['assertion']) ? (array) $rule['assertion'] : null;
             foreach ($this->extractResourcesFromRule($rule) as $resource) {
-                $this->config[$resource] = ['roles' => (array) $rule['roles']];
-                if (isset($rule['assertion'])) {
-                    $this->config[$resource]['assertion'] = $rule['assertion'];
-                }
+                $this->config[$resource][] = compact('roles', 'privileges', 'assertion');
             }
         }
 

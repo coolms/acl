@@ -64,9 +64,9 @@ class Controller extends AbstractGuard
         $request    = $event->getRequest();
         $method     = $request instanceof HttpRequest ? strtolower($request->getMethod()) : null;
 
-        if ($service->isAllowed($this->getResourceName($controller))
-            || $service->isAllowed($this->getResourceName($controller, $action))
-            || ($method && $service->isAllowed($this->getResourceName($controller, $method)))
+        if ($service->isAllowed($this->getResourceName($controller)) ||
+            $service->isAllowed($this->getResourceName($controller, $action)) ||
+            ($method && $service->isAllowed($this->getResourceName($controller, $method)))
         ) {
             return true;
         }
