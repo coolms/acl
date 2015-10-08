@@ -12,6 +12,8 @@ namespace CmsAcl\Factory\View\Helper;
 
 use Zend\ServiceManager\FactoryInterface,
     Zend\ServiceManager\ServiceLocatorInterface,
+    CmsAcl\Options\ModuleOptionsInterface,
+    CmsAcl\Options\ModuleOptions,
     CmsAcl\View\Helper\IsAllowed;
 
 class IsAllowedHelperFactory implements FactoryInterface
@@ -25,8 +27,8 @@ class IsAllowedHelperFactory implements FactoryInterface
     {
         $services = $helpers->getServiceLocator();
 
-        /* @var $options \CmsAcl\Options\ModuleOptionsInterface */
-        $options = $services->get('CmsAcl\\Options\\ModuleOptions');
+        /* @var $options ModuleOptionsInterface */
+        $options = $services->get(ModuleOptions::class);
         /* @var $authorizationService \CmsAcl\Service\AuthorizationServiceInterface */
         $authorizationService = $services->get($options->getAuthorizationService());
 

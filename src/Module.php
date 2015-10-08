@@ -12,6 +12,8 @@ namespace CmsAcl;
 
 use Zend\EventManager\EventInterface,
     Zend\Http\Request as HttpRequest,
+    Zend\Loader\ClassMapAutoloader,
+    Zend\Loader\StandardAutoloader,
     Zend\ModuleManager\Feature\AutoloaderProviderInterface,
     Zend\ModuleManager\Feature\BootstrapListenerInterface,
     Zend\ModuleManager\Feature\ConfigProviderInterface,
@@ -36,10 +38,10 @@ class Module implements
     public function getAutoloaderConfig()
     {
         return [
-            'Zend\Loader\ClassMapAutoloader' => [
+            ClassMapAutoloader::class => [
                 __DIR__ . '/../autoload_classmap.php',
             ],
-            'Zend\Loader\StandardAutoloader' => [
+            StandardAutoloader::class => [
                 'fallback_autoloader' => true,
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__,

@@ -18,6 +18,7 @@ use Zend\Permissions\Acl\AclInterface,
     Zend\ServiceManager\ServiceLocatorAwareTrait,
     Zend\ServiceManager\ServiceLocatorInterface,
     CmsCommon\Permissions\Acl\AclProviderInterface,
+    CmsPermissions\Identity\ProviderInterface as IdentityProviderInterface,
     CmsPermissions\Role\ProviderInterface as RoleProvider,
     CmsAcl\Exception\InvalidRoleException,
     CmsAcl\Resource\HierarchicalResourceInterface,
@@ -119,8 +120,8 @@ class AuthorizationService implements AuthorizationServiceInterface, AclProvider
             $this->acl = $acl;
         }
 
-        /* @var $identityProvider \CmsPermissions\Identity\ProviderInterface */
-        $identityProvider = $this->getServiceLocator()->get('CmsPermissions\\Identity\\ProviderInterface');
+        /* @var $identityProvider IdentityProviderInterface */
+        $identityProvider = $this->getServiceLocator()->get(IdentityProviderInterface::class);
         $this->identity   = $identityProvider->getIdentity();
 
         $this->loadRole($this->identity);

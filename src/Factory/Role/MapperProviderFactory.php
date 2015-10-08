@@ -12,6 +12,8 @@ namespace CmsAcl\Factory\Role;
 
 use Zend\ServiceManager\FactoryInterface,
     Zend\ServiceManager\ServiceLocatorInterface,
+    CmsPermissions\Options\ModuleOptionsInterface,
+    CmsPermissions\Options\ModuleOptions,
     CmsAcl\Role\MapperProvider;
 
 /**
@@ -24,14 +26,14 @@ class MapperProviderFactory implements FactoryInterface
     /**
      * {@inheritDoc}
      *
-     * @return \CmsAcl\Role\MapperProvider
+     * @return MapperProvider
      */
     public function createService(ServiceLocatorInterface $roleProviders)
     {
         $services = $roleProviders->getServiceLocator();
 
-        /* @var $options \CmsPermissions\Options\ModuleOptionsInterface */
-        $options = $services->get('CmsPermissions\\Options\\ModuleOptions');
+        /* @var $options ModuleOptionsInterface */
+        $options = $services->get(ModuleOptions::class);
 
         return new MapperProvider($services->get('MapperManager')->get($options->getRoleEntityClass()));
     }

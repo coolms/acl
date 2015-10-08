@@ -13,6 +13,8 @@ namespace CmsAcl\Initializer;
 use Zend\ServiceManager\AbstractPluginManager,
     Zend\ServiceManager\InitializerInterface,
     Zend\ServiceManager\ServiceLocatorInterface,
+    CmsAcl\Options\ModuleOptionsInterface,
+    CmsAcl\Options\ModuleOptions,
     CmsAcl\Service\AuthorizationServiceAwareInterface;
 
 class AuthorizationServiceInitializer implements InitializerInterface
@@ -27,8 +29,8 @@ class AuthorizationServiceInitializer implements InitializerInterface
                 $serviceLocator = $serviceLocator->getServiceLocator();
             }
 
-            /* @var $options \CmsAcl\Options\ModuleOptionsInterface */
-            $options = $serviceLocator->get('CmsAcl\\Options\\ModuleOptions');
+            /* @var $options ModuleOptionsInterface */
+            $options = $serviceLocator->get(ModuleOptions::class);
             /* @var $authorizationService \CmsAcl\Service\AuthorizationServiceInterface */
             $authorizationService = $serviceLocator->get($options->getAuthorizationService());
             $instance->setAuthorizationService($authorizationService);

@@ -10,7 +10,8 @@
 
 namespace CmsAcl\Factory\Rule;
 
-use Zend\ServiceManager\FactoryInterface,
+use Zend\Permissions\Acl\Assertion\AssertionManager,
+    Zend\ServiceManager\FactoryInterface,
     Zend\ServiceManager\MutableCreationOptionsInterface,
     Zend\ServiceManager\ServiceLocatorInterface,
     CmsAcl\Rule\InMemoryProvider;
@@ -35,7 +36,7 @@ class InMemoryProviderFactory implements FactoryInterface, MutableCreationOption
     public function createService(ServiceLocatorInterface $ruleProviders)
     {
         $services = $ruleProviders->getServiceLocator();
-        $assertionPluginManager = $services->get('Zend\Permissions\Acl\Assertion\AssertionManager');
+        $assertionPluginManager = $services->get(AssertionManager::class);
 
         return new InMemoryProvider($this->options, $assertionPluginManager);
     }

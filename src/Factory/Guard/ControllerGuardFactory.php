@@ -10,10 +10,13 @@
 
 namespace CmsAcl\Factory\Guard;
 
-use Zend\ServiceManager\FactoryInterface,
+use Zend\Permissions\Acl\Assertion\AssertionManager,
+    Zend\ServiceManager\FactoryInterface,
     Zend\ServiceManager\MutableCreationOptionsInterface,
     Zend\ServiceManager\ServiceLocatorInterface,
-    CmsAcl\Guard\Controller;
+    CmsAcl\Guard\Controller,
+    CmsAcl\Options\ModuleOptionsInterface,
+    CmsAcl\Options\ModuleOptions;
 
 /**
  * Factory for building the controller guard
@@ -34,14 +37,14 @@ class ControllerGuardFactory implements FactoryInterface, MutableCreationOptions
     {
         $services = $guards->getServiceLocator();
 
-        /* @var $options \CmsAcl\Options\ModuleOptionsInterface */
-        $options = $services->get('CmsAcl\\Options\\ModuleOptions');
+        /* @var $options ModuleOptionsInterface */
+        $options = $services->get(ModuleOptions::class);
 
         /* @var $authorizationService \CmsAcl\Service\AuthorizationServiceInterface */
         $authorizationService = $services->get($options->getAuthorizationService());
 
-        /* @var $assertionPluginManager \Zend\Permissions\Acl\Assertion\AssertionManager */
-        $assertionPluginManager = $services->get('Zend\Permissions\Acl\Assertion\AssertionManager');
+        /* @var $assertionPluginManager AssertionManager */
+        $assertionPluginManager = $services->get(AssertionManager::class);
 
         return new Controller($this->options, $authorizationService, $assertionPluginManager);
     }

@@ -12,7 +12,9 @@ namespace CmsAcl\Factory;
 
 use Zend\Permissions\Acl\Acl,
     Zend\ServiceManager\FactoryInterface,
-    Zend\ServiceManager\ServiceLocatorInterface;
+    Zend\ServiceManager\ServiceLocatorInterface,
+    CmsAcl\Options\ModuleOptionsInterface,
+    CmsAcl\Options\ModuleOptions;
 
 /**
  * Factory for building the ACL
@@ -28,8 +30,8 @@ class AclFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /* @var $options \CmsAcl\Options\ModuleOptionsInterface */
-        $options = $serviceLocator->get('CmsAcl\\Options\\ModuleOptions');
+        /* @var $options ModuleOptionsInterface */
+        $options = $serviceLocator->get(ModuleOptions::class);
         return $serviceLocator->get($options->getAuthorizationService())->getAcl();
     }
 }

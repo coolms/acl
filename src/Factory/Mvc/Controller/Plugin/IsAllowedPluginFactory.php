@@ -12,7 +12,9 @@ namespace CmsAcl\Factory\Mvc\Controller\Plugin;
 
 use Zend\ServiceManager\FactoryInterface,
     Zend\ServiceManager\ServiceLocatorInterface,
-    CmsAcl\Mvc\Controller\Plugin\IsAllowed;
+    CmsAcl\Mvc\Controller\Plugin\IsAllowed,
+    CmsAcl\Options\ModuleOptionsInterface,
+    CmsAcl\Options\ModuleOptions;
 
 class IsAllowedPluginFactory implements FactoryInterface
 {
@@ -23,8 +25,8 @@ class IsAllowedPluginFactory implements FactoryInterface
     {
         $parentLocator = $plugins->getServiceLocator();
 
-        /* @var $options \CmsAcl\Options\ModuleOptionsInterface */
-        $options = $parentLocator->get('CmsAcl\\Options\\ModuleOptions');
+        /* @var $options ModuleOptionsInterface */
+        $options = $parentLocator->get(ModuleOptions::class);
         $authService = $parentLocator->get($options->getAuthorizationService());
 
         return new IsAllowed($authService);

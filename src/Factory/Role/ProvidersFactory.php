@@ -11,7 +11,10 @@
 namespace CmsAcl\Factory\Role;
 
 use Zend\ServiceManager\FactoryInterface,
-    Zend\ServiceManager\ServiceLocatorInterface;
+    Zend\ServiceManager\ServiceLocatorInterface,
+    CmsPermissions\Options\ModuleOptionsInterface,
+    CmsPermissions\Options\ModuleOptions,
+    CmsPermissions\Role\ProviderPluginManager;
 
 /**
  * Factory responsible of building a set of {@see \CmsPermissions\Role\ProviderInterface}
@@ -27,8 +30,8 @@ class ProvidersFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /* @var $options \CmsPermissions\Options\ModuleOptionsInterface */
-        $options = $serviceLocator->get('CmsPermissions\Options\ModuleOptions');
+        /* @var $options ModuleOptionsInterface */
+        $options = $serviceLocator->get(ModuleOptions::class);
         $providersOptions = $options->getRoleProviders();
         $providers = [];
 
@@ -36,7 +39,10 @@ class ProvidersFactory implements FactoryInterface
             return $providers;
         }
 
-        /* @var $pluginManager \CmsPermissions\Role\ProviderPluginManager */
+        /**
+         * @todo Is CmsAcl\Role\ProviderPluginManager correct key?
+         */
+        /* @var $pluginManager ProviderPluginManager */
         $pluginManager = $serviceLocator->get('CmsAcl\Role\ProviderPluginManager');
 
         foreach ($providersOptions as $type => $options) {

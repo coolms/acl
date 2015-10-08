@@ -12,7 +12,8 @@ namespace CmsAcl\Factory;
 
 use Zend\ServiceManager\FactoryInterface,
     Zend\ServiceManager\ServiceLocatorInterface,
-    CmsAcl\Collector\RoleCollector;
+    CmsAcl\Collector\RoleCollector,
+    CmsPermissions\Identity\ProviderInterface;
 
 /**
  * Factory for building the role collector
@@ -26,8 +27,8 @@ class RoleCollectorFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /* @var $provider \CmsPermissions\Identity\ProviderInterface */
-        $provider = $serviceLocator->get('CmsPermissions\\Identity\\ProviderInterface');
+        /* @var $provider ProviderInterface */
+        $provider = $serviceLocator->get(ProviderInterface::class);
         return new RoleCollector($provider);
     }
 }

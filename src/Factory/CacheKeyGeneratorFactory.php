@@ -11,7 +11,9 @@
 namespace CmsAcl\Factory;
 
 use Zend\ServiceManager\FactoryInterface,
-    Zend\ServiceManager\ServiceLocatorInterface;
+    Zend\ServiceManager\ServiceLocatorInterface,
+    CmsAcl\Options\ModuleOptionsInterface,
+    CmsAcl\Options\ModuleOptions;
 
 /**
  * Factory for building a cache key generator
@@ -27,8 +29,8 @@ class CacheKeyGeneratorFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /* @var $config \CmsAcl\Options\ModuleOptionsInterface */
-        $options    = $serviceLocator->get('CmsAcl\\Options\\ModuleOptions');
+        /* @var $config ModuleOptionsInterface */
+        $options    = $serviceLocator->get(ModuleOptions::class);
         $cacheKey   = $options->getCacheKey() ?: 'cms_acl';
 
         return function () use ($cacheKey) {

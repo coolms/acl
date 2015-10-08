@@ -29,8 +29,9 @@ class ProviderPluginManager extends AbstractPluginManager
         if (! $plugin instanceof ProviderInterface) {
             throw new InvalidArgumentException(
                 sprintf(
-                    'Plugin of type %s is invalid; must implement CmsAcl\Resource\ProviderInterface',
-                    (is_object($plugin) ? get_class($plugin) : gettype($plugin))
+                    'Plugin of type %s is invalid; must implement %s',
+                    (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
+                    ProviderInterface::class
                 )
             );
         }

@@ -11,7 +11,10 @@
 namespace CmsAcl\Factory\Resource;
 
 use Zend\ServiceManager\FactoryInterface,
-    Zend\ServiceManager\ServiceLocatorInterface;
+    Zend\ServiceManager\ServiceLocatorInterface,
+    CmsAcl\Options\ModuleOptionsInterface,
+    CmsAcl\Options\ModuleOptions,
+    CmsAcl\Resource\ProviderPluginManager;
 
 /**
  * Factory responsible of a set of {@see \CmsAcl\Resource\ProviderInterface}
@@ -27,8 +30,8 @@ class ProvidersFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /* @var $options \CmsAcl\Options\ModuleOptionsInterface */
-        $options = $serviceLocator->get('CmsAcl\Options\ModuleOptions');
+        /* @var $options ModuleOptionsInterface */
+        $options = $serviceLocator->get(ModuleOptions::class);
         $providersOptions = $options->getResourceProviders();
         $providers = [];
 
@@ -36,8 +39,8 @@ class ProvidersFactory implements FactoryInterface
             return $providers;
         }
 
-        /* @var $pluginManager \CmsAcl\Resource\ProviderPluginManager */
-        $pluginManager = $serviceLocator->get('CmsAcl\Resource\ProviderPluginManager');
+        /* @var $pluginManager ProviderPluginManager */
+        $pluginManager = $serviceLocator->get(ProviderPluginManager::class);
 
         foreach ($providersOptions as $type => $options) {
             $providers[] = $pluginManager->get($type, $options);

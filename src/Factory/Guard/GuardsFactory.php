@@ -11,7 +11,10 @@
 namespace CmsAcl\Factory\Guard;
 
 use Zend\ServiceManager\FactoryInterface,
-    Zend\ServiceManager\ServiceLocatorInterface;
+    Zend\ServiceManager\ServiceLocatorInterface,
+    CmsAcl\Guard\GuardPluginManager,
+    CmsAcl\Options\ModuleOptionsInterface,
+    CmsAcl\Options\ModuleOptions;
 
 /**
  * Factory responsible of building a set of {@see \CmsPermissions\Guard\GuardInterface}
@@ -27,16 +30,16 @@ class GuardsFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        /* @var $options \CmsAcl\Options\ModuleOptionsInterface */
-        $options = $serviceLocator->get('CmsAcl\Options\ModuleOptions');
+        /* @var $options ModuleOptionsInterface */
+        $options = $serviceLocator->get(ModuleOptions::class);
         $guardsOptions = $options->getGuards();
 
         if (empty($guardsOptions)) {
             return [];
         }
 
-        /* @var $pluginManager \CmsAcl\Guard\GuardPluginManager */
-        $pluginManager = $serviceLocator->get('CmsAcl\Guard\GuardPluginManager');
+        /* @var $pluginManager GuardPluginManager */
+        $pluginManager = $serviceLocator->get(GuardPluginManager::class);
         $guards = [];
 
         foreach ($guardsOptions as $type => $options) {

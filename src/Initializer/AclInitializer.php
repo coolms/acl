@@ -10,11 +10,13 @@
 
 namespace CmsAcl\Initializer;
 
-use Zend\ServiceManager\AbstractPluginManager,
+use Zend\Permissions\Acl\AclInterface,
+    Zend\ServiceManager\AbstractPluginManager,
     Zend\ServiceManager\InitializerInterface,
     Zend\ServiceManager\ServiceLocatorInterface,
     Zend\View\Helper\Navigation\AbstractHelper as AbstractNavigationHelper,
-    CmsCommon\Permissions\Acl\AclAwareInterface;
+    CmsCommon\Permissions\Acl\AclAwareInterface,
+    CmsPermissions\Identity\ProviderInterface;
 
 class AclInitializer implements InitializerInterface
 {
@@ -34,15 +36,15 @@ class AclInitializer implements InitializerInterface
             $serviceLocator = $serviceLocator->getServiceLocator();
         }
 
-        if ($serviceLocator->has('Zend\\Permissions\\Acl\\AclInterface')) {
-            /* @var $acl \Zend\Permissions\Acl\AclInterface */
-            $acl = $serviceLocator->get('Zend\\Permissions\\Acl\\AclInterface');
+        if ($serviceLocator->has(AclInterface::class)) {
+            /* @var $acl AclInterface */
+            $acl = $serviceLocator->get(AclInterface::class);
             $instance::setDefaultAcl($acl);
         }
 
-        if ($serviceLocator->has('CmsPermissions\\Identity\\ProviderInterface')) {
-            /* @var $identityProvider \CmsPermissions\Identity\ProviderInterface */
-            $identityProvider = $serviceLocator->get('CmsPermissions\\Identity\\ProviderInterface');
+        if ($serviceLocator->has(ProviderInterface::class)) {
+            /* @var $identityProvider ProviderInterface */
+            $identityProvider = $serviceLocator->get(ProviderInterface::class);
             $instance::setDefaultRole($identityProvider->getIdentity());
         }
     }
